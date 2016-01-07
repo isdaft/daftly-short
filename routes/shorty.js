@@ -61,23 +61,23 @@ function createShortCode(longUrl) {
     mongo.connect(url, function(err,db) {
 	if (err) throw err
 	var URLs = db.collection('URLs');
-	URLs.find({
+	URLs.findOne({
      	 longUrls: longUrl
-    	}).toArray(function(err, documents) {
+    	}, function(err, documents) {
     	if (err) throw err
 	
-        console.log("test: " + JSON.stringify(documents));
+        console.log("test: " + documents.longUrls);
         //
 	//
 	//
 	//
 	var tester = documents;
         //test pinpoint var within db to extract and use
-	console.log("retDoc.longUrls " + retDoc[3]);
-	console.log("documents.shortCode: " + JSON.stringify(documents["shortCode"]));
+	//console.log("document[0]s "+documents[0].longUrls);
+	console.log("documents.shortCode: " + JSON.stringify(documents));
 	console.log("documents[longUrls]; " + tester); 
 	//if longUrl (the one inserted) = specific var within db
-	if (longUrl === JSON.stringify(documents.longUrls)){
+	if (longUrl === JSON.stringify(documents)){
 		docFound = true;
 		console.log(docFound);
 	} 
