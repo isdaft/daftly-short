@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 nodejs-url-shortener
 =====================
 
@@ -29,3 +30,7 @@ Please contact on twitter
 
 
   [1]: http://www.twitter.com/jameselsey1986
+=======
+daftly shortner
+based off of https://github.com/rafaelgarrido/urlshortener
+>>>>>>> 07753cb71e028445bf40fe3e3bf0194f5728a50d
