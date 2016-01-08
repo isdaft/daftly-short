@@ -3,6 +3,7 @@ var longToShort = [];
 var shortToLong = [];
 var longUrls = null;
 var shortCode = null;
+var docFound = false;
 var urlObj = {
 longUrls: longUrls,
 shortCode: shortCode
@@ -53,7 +54,7 @@ exports.getLong = function (req, res) {
 function createShortCode(longUrl) {
     console.log("finding URL in DB if exists, or pulling " + longUrl);
     //MongoDB - check if LONG URL is in database
-    var docFound = false;
+   
     var retDoc = null;;
     var url = "mongodb://localhost:27017/shortenURL";
     urlObj.longUrls = longUrl;
@@ -63,48 +64,45 @@ function createShortCode(longUrl) {
 	var URLs = db.collection('URLs');
 	URLs.findOne({
      	 longUrls: longUrl
-    	}, function(err, documents) {
+    	}, function(err, doc) {
     	if (err) throw err
-	
-        console.log("test: " + documents.longUrls);
-        //
-	//
-	//
-	//
-	var tester = documents;
-        //test pinpoint var within db to extract and use
-	//console.log("document[0]s "+documents[0].longUrls);
-	console.log("documents.shortCode: " + JSON.stringify(documents));
-	console.log("documents[longUrls]; " + tester); 
-	//if longUrl (the one inserted) = specific var within db
-	if (longUrl === JSON.stringify(documents)){
+	if(doc !== null){
+		if(doc.longUrls !== null){
 		docFound = true;
+		console.log(" URL Match Hit: " + doc.longUrls);
 		console.log(docFound);
-	} 
+		}
+	}
+	})
+	console.log('after connection: ' + docFound)
+	if (docFound === false){
+            mongoInsert(db, 'URLs', urlObj, function(user_res) { 
+            console.log(user_res);
+            db.close();
+		})
+	}
 	
-	db.close();
+       	
+	
     	})
-})
-retDoc = null;
-if (retDoc === null){
-    //mongoDB insert generated urls into mongodb
-    shortUrlCode = randomString(5);
-    shortUrl = shortUrlCode;	
-    var url = "mongodb://localhost:27017/shortenURL";
-    var mongo = require('mongodb').MongoClient
-    mongo.connect(url, function(err,db) {
-        if (err) throw err
-        var URLs = db.collection('URLs');
-        URLs.insert({longUrls: urlObj.longUrls, shortCode: urlObj.shortCode}, function(err, data){
-	if(err) throw err
-	console.log("MongoDB Inserted: " +JSON.stringify(urlObj));
-	console.log("data contains: " + JSON.stringify(data));
-	db.close();
-		
-	})
 
-	})
+function mongoInsert(db, collection_name, data,cb) {
+    var collection = db.collection(collection_name);
+    collection.insert(data, function(err, res) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            console.log('Inserted into the ' + collection_name + ' collection');
+            console.log('inserted ' + data.longUrls );
+            cb(res);
+        }
+    });
 }
+
+    var shortUrlCode = randomString(5);
+    var shortUrl = shortUrlCode;	
+   
     //	
     // Check if there is already a shortcode for the longUrl
     shortUrlCode = longToShort[longUrl];
