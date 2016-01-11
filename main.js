@@ -33,8 +33,8 @@ if ('development' == app.get('env')) {
 //app.post('/create', shorty.createShort);
   //app.get('/:short', shorty.getLong);
   //app.get('/:query', shorty.doQuery);
-  app.get('/:http://:link/:extra', shorty.getHttp); //if ending slash exists, will not work
-  //app.post('/create', shorty.mongoHttp);
+  app.get('/:http://:link', shorty.getHttp);
+  app.get('/:http://:link/:extra', shorty.getHttp);
 app.get('/:short', shorty.getLong);
   
   
