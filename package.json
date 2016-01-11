@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "ben",
   "version": "0.0.1",
   "private": true,
@@ -10,17 +9,5 @@
     "express": "3.4.4",
     "jade": "*",
     "mongodb": "^2.1.3"
-=======
-  "name": "chat-example",
-  "version": "0.0.0",
-  "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
-  "main": "server.js",
-  "repository": "",
-  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
-  "dependencies": {
-    "async": "~0.2.8",
-    "express": "~3.2.4",
-    "socket.io": "~0.9.14"
->>>>>>> 07753cb71e028445bf40fe3e3bf0194f5728a50d
-  }
+ 
 }

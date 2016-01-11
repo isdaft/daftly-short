@@ -30,9 +30,14 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.post('/create', shorty.createShort);
+//app.post('/create', shorty.createShort);
+  //app.get('/:short', shorty.getLong);
+  //app.get('/:query', shorty.doQuery);
+  app.get('/:http://:link/:extra', shorty.getHttp); //if ending slash exists, will not work
+  //app.post('/create', shorty.mongoHttp);
 app.get('/:short', shorty.getLong);
+  
+  
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
